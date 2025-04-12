@@ -13,6 +13,6 @@ namespace ApplesGame
 
     void InitUI(UIState& uiState, const sf::Font& font);
     void DrawUI(UIState& uiState, sf::RenderWindow& window);
-    void UpdateUIScore(UIState& uiState, int score);
+    void UpdateUIScore(UIState& uiState, short score);
     void ShowGameOverText(UIState& uiState, bool show);
 }

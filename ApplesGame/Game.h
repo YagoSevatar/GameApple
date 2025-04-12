@@ -12,15 +12,15 @@ namespace ApplesGame
     struct Game
     {
         Player player;
-        Apple apple[MAX_APPLES]; 
+        Apple* apple = nullptr;;//добавлен динамический массив
         Wall wall[NUM_WALLS];
 
-        int numEatenApples = 0;
-        int numApplesOnScreen = 0; 
+        short numEatenApples = 0;
+        short numApplesOnScreen = 0; 
         UIState uiState;
         bool isGameFinished = false;
         float timeSinceGameFinish = 0.f;
-        int gameMode = 0; 
+        uint32_t gameMode = 0; //исплавлен short на uint32_t
 
         sf::RectangleShape background;
         sf::Font font;

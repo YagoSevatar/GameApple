@@ -39,7 +39,7 @@ namespace ApplesGame
         window.draw(uiState.gameOverText);
     }
 
-    void UpdateUIScore(UIState& uiState, int score)
+    void UpdateUIScore(UIState& uiState, short score)
     {
         uiState.scoreText.setString("Apples eaten: " + std::to_string(score));
     }

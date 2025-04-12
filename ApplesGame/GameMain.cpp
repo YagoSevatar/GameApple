@@ -6,7 +6,7 @@
 int main()
 {
     using namespace ApplesGame;
-    int seed = (int)time(nullptr);
+    short seed = (short)time(nullptr);
     srand(seed);
 
     sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Apples game!");

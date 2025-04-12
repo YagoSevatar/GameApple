@@ -6,14 +6,24 @@ namespace ApplesGame
     {
         InitPlayer(game.player, game);
 
+        // Освобождаем старый массив в начале цикла
+        if (game.apple != nullptr)
+        {
+            delete[] game.apple;
+        }
+
+        // Количество яблок зависит от режима
         game.numApplesOnScreen = (game.gameMode & INFINITE_APPLES) ? MAX_APPLES : MAX_APPLES / 2;
 
-        for (int i = 0; i < game.numApplesOnScreen; ++i)
+        // Выделяем память под массив
+        game.apple = new Apple[game.numApplesOnScreen];
+
+        for (short i = 0; i < game.numApplesOnScreen; ++i)
         {
             InitApple(game.apple[i], game);
         }
 
-        for (int i = 0; i < NUM_WALLS; ++i)
+        for (short i = 0; i < NUM_WALLS; ++i)
         {
             InitWall(game.wall[i], game);
         }
@@ -83,7 +93,7 @@ namespace ApplesGame
                 break;
             }
 
-            for (int i = 0; i < game.numApplesOnScreen; ++i)
+            for (short i = 0; i < game.numApplesOnScreen; ++i)
             {
                 if (IsCirclesCollide(game.player.position, PLAYER_SIZE / 2.f,
                     game.apple[i].position, APPLE_SIZE / 2.f))
@@ -119,7 +129,7 @@ namespace ApplesGame
                 }
             }
 
-            for (int i = 0; i < NUM_WALLS; ++i)
+            for (short i = 0; i < NUM_WALLS; ++i)
             {
                 if (IsRectanglesCollide(game.player.position, { PLAYER_SIZE, PLAYER_SIZE },
                     game.wall[i].position, { WALL_SIZE, WALL_SIZE }))
@@ -162,12 +172,12 @@ namespace ApplesGame
         window.draw(game.background);
         DrawPlayer(game.player, window);
 
-        for (int i = 0; i < game.numApplesOnScreen; ++i)
+        for (short i = 0; i < game.numApplesOnScreen; ++i)
         {
             DrawApple(game.apple[i], window);
         }
 
-        for (int i = 0; i < NUM_WALLS; ++i)
+        for (short i = 0; i < NUM_WALLS; ++i)
         {
             DrawWall(game.wall[i], window);
         }
@@ -177,6 +187,11 @@ namespace ApplesGame
 
     void DeinializeGame(Game& game)
     {
-
+        // Добавлено освобождения памяти
+        if (game.apple != nullptr)
+        {
+            delete[] game.apple;
+            game.apple = nullptr;
+        }
     }
 }
