@@ -46,7 +46,19 @@ int main()
                 window.close();
                 break;
             }
-
+            // Обработка Esc как в меню, так и во время игры
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+            {
+                window.close();
+            }
+            // Обработка R для рестарта только после завершения игры
+            if (game.isGameFinished && event.type == sf::Event::KeyPressed &&
+                event.key.code == sf::Keyboard::R)
+            {
+                game.background.setFillColor(sf::Color::Black);
+                RestartGame(game);
+                ShowGameOverText(game.uiState, false);
+            }
             if (!modeSelected && event.type == sf::Event::KeyPressed)
             {
                 switch (event.key.code)

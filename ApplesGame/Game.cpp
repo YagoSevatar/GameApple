@@ -33,6 +33,7 @@ namespace ApplesGame
         game.timeSinceGameFinish = 0;
         game.player.speed = INITIAL_SPEED;
         UpdateUIScore(game.uiState, game.numEatenApples);
+        game.uiState.isHighScoresPrepared = false;
     }
 
     void InitGame(Game& game)
@@ -123,6 +124,7 @@ namespace ApplesGame
                         game.isGameFinished = true;
                         game.timeSinceGameFinish = 0.f;
                         ShowGameOverText(game.uiState, true);
+                        HighScores(game.uiState, game.numEatenApples);
                     }
 
                     break;
@@ -138,6 +140,7 @@ namespace ApplesGame
                     game.timeSinceGameFinish = 0.f;
                     game.deathSoundPlayer.play();
                     ShowGameOverText(game.uiState, true);
+                    HighScores(game.uiState, game.numEatenApples);
                 }
             }
 
@@ -150,15 +153,30 @@ namespace ApplesGame
                 game.timeSinceGameFinish = 0.f;
                 game.deathSoundPlayer.play();
                 ShowGameOverText(game.uiState, true);
+                HighScores(game.uiState, game.numEatenApples);
             }
         }
+        
         else
         {
-            if (game.timeSinceGameFinish <= PAUSE_LENGTH)
+            game.timeSinceGameFinish += deltaTime;
+
+            // ќбработка ввода после завершени€ игры
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
             {
-                game.timeSinceGameFinish += deltaTime;
+                game.background.setFillColor(sf::Color::Black);
+                RestartGame(game);
+                ShowGameOverText(game.uiState, false);
             }
-            else
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                // ¬ыход из игры будет обработан в главном цикле
+            }
+
+            // јвтоматический рестарт после паузы, только если не нажаты клавиши
+            if (game.timeSinceGameFinish >= PAUSE_LENGTH &&
+                !sf::Keyboard::isKeyPressed(sf::Keyboard::R) &&
+                !sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 game.background.setFillColor(sf::Color::Black);
                 RestartGame(game);
@@ -187,11 +205,11 @@ namespace ApplesGame
 
     void DeinializeGame(Game& game)
     {
-        // ƒобавлено освобождени€ пам€ти
+        // освобождени€ пам€ти
         if (game.apple != nullptr)
         {
             delete[] game.apple;
             game.apple = nullptr;
         }
     }
-}
+};

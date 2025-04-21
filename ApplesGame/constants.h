@@ -10,13 +10,13 @@ namespace ApplesGame
     const float ACCELERATION = 10.f;
     const short MAX_APPLES = 30; 
     const float APPLE_SIZE = 20.f;
-    const float PAUSE_LENGTH = 2.f;
+    const float PAUSE_LENGTH = 10.f;
     const short NUM_WALLS = 10;
     const float WALL_SIZE = 20.f;
     const float PAUSE_TIME = 2.0f;
 
 
-    enum GameMode :uint32_t //добавлено uint32_t и исправлены битовые маски на более понятные
+    enum GameMode :uint32_t 
     {
         INFINITE_APPLES = 1 << 0,
         WITH_ACCELERATION = 2 << 1,
