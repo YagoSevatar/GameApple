@@ -12,7 +12,7 @@ namespace ApplesGame
     struct Game
     {
         Player player;
-        Apple* apple = nullptr;;
+        std::vector<Apple>apple;
         Wall wall[NUM_WALLS];
 
         short numEatenApples = 0;

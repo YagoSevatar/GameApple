@@ -7,16 +7,12 @@ namespace ApplesGame
         InitPlayer(game.player, game);
 
         // Освобождаем старый массив в начале цикла
-        if (game.apple != nullptr)
-        {
-            delete[] game.apple;
-        }
-
+        game.apple.clear();
         // Количество яблок зависит от режима
         game.numApplesOnScreen = (game.gameMode & INFINITE_APPLES) ? MAX_APPLES : MAX_APPLES / 2;
 
         // Выделяем память под массив
-        game.apple = new Apple[game.numApplesOnScreen];
+        game.apple.resize (game.numApplesOnScreen);
 
         for (short i = 0; i < game.numApplesOnScreen; ++i)
         {
@@ -206,10 +202,6 @@ namespace ApplesGame
     void DeinializeGame(Game& game)
     {
         // освобождения памяти
-        if (game.apple != nullptr)
-        {
-            delete[] game.apple;
-            game.apple = nullptr;
-        }
+       game.apple.clear();
     }
 };
